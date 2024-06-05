@@ -20,7 +20,6 @@ static struct PyModuleDef simplecsvmodule = {
 };
 
 PyMODINIT_FUNC PyInit_simplecsv(void) {
-    Py_Initialize();
     return PyModule_Create(&simplecsvmodule);
 }
 
@@ -31,14 +30,22 @@ static PyObject* simplecsv_serialize_on_stack(PyObject* self, PyObject* args) {
     char *current_pos, *result_str;
     size_t len;
     
-    char *temp[MAX_STACK_ARRAY_SIZE];
+    const char *temp[MAX_STACK_ARRAY_SIZE];
 
     if (!PyArg_ParseTuple(args, "O", &input_dict)) {
         return NULL;
     }
 
     values = PyDict_Values(input_dict);
+    if (!values) {
+        return NULL;
+    }
+
     values_count = PyList_Size(values);
+    if (values_count < 0) {
+        Py_DECREF(values);
+        return NULL;
+    }
 
     if (values_count > MAX_STACK_ARRAY_SIZE) {
         Py_DECREF(values);
@@ -48,16 +55,28 @@ static PyObject* simplecsv_serialize_on_stack(PyObject* self, PyObject* args) {
 
     for (i = 0; i < values_count; i++) {
         item = PyList_GetItem(values, i);
+        if (!item) {
+            Py_DECREF(values);
+            return NULL;
+        }
         PyObject *str_item = PyObject_Str(item);
+        if (!str_item) {
+            Py_DECREF(values);
+            return NULL;
+        }
         temp[i] = PyUnicode_AsUTF8(str_item);
+        if (!temp[i]) {
+            Py_DECREF(str_item);
+            Py_DECREF(values);
+            return NULL;
+        }
         total_length += strlen(temp[i]) + 1; // +1 for comma
+        Py_DECREF(str_item);
     }
 
     result_str = (char *)malloc(total_length);
     if (!result_str) {
-        for (i = 0; i < values_count; i++) {
-            free(temp[i]);
-        }
+        Py_DECREF(values);
         return PyErr_NoMemory();
     }
 
@@ -81,7 +100,6 @@ static PyObject* simplecsv_serialize_on_stack(PyObject* self, PyObject* args) {
     return final_result;
 }
 
-
 static PyObject* simplecsv_serialize_on_heap(PyObject* self, PyObject* args) {
     PyObject *input_dict, *values, *item;
     Py_ssize_t values_count, i;
@@ -93,6 +111,10 @@ static PyObject* simplecsv_serialize_on_heap(PyObject* self, PyObject* args) {
     }
 
     values = PyDict_Values(input_dict);
+    if (!values) {
+        return NULL;
+    }
+
     values_count = PyList_Size(values);
     if (values_count < 0) {
         Py_DECREF(values);
@@ -129,7 +151,13 @@ static PyObject* simplecsv_serialize_on_heap(PyObject* self, PyObject* args) {
             Py_DECREF(values);
             return NULL;
         }
-        char *temp = PyUnicode_AsUTF8(str_item);
+        const char *temp = PyUnicode_AsUTF8(str_item);
+        if (!temp) {
+            Py_DECREF(str_item);
+            free(result_str);
+            Py_DECREF(values);
+            return NULL;
+        }
         len = strlen(temp);
         memcpy(current_pos, temp, len);
         current_pos += len;
@@ -147,4 +175,3 @@ static PyObject* simplecsv_serialize_on_heap(PyObject* self, PyObject* args) {
     free(result_str);
     return final_result;
 }
-
