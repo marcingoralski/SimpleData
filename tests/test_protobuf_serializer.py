@@ -3,7 +3,8 @@ from unittest.mock import mock_open, patch
 from factory.serializer_factory import SimpleDataSerializer
 from factory.format_enum import Format
 from models.person import Person
-from modules.person_pb2 import Person as PersonProto, People as PeopleProto
+from models.person_pb2 import Person as PersonProto, People as PeopleProto
+
 
 class TestProtobufSerializer(unittest.TestCase):
 

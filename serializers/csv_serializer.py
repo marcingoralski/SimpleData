@@ -1,4 +1,4 @@
-from simplecsv import serialize_on_heap
+from simplecsv import serialize_c
 from serializers.base import Serializable, Serializer
 from typing import Iterator, List, Type
 
@@ -10,7 +10,7 @@ class CSVSerializer(Serializer):
 
         try:
             for item in data:
-                yield serialize_on_heap(item.to_serializable())
+                yield serialize_c(item.to_serializable())
         except TypeError:
             raise ValueError("Invalid data type")
 

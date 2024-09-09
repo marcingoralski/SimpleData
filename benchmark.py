@@ -1,12 +1,11 @@
-import threading
 import timeit
-from simplecsv import serialize_on_heap, serialize_on_stack
+from simplecsv import serialize_c
 import csv
 import io
 
 
 def serialize_py(serializable):
-    return [",".join(key) for key, value in serializable.items()]
+    return [",".join([str(key), str(value)]) for key, value in serializable.items()]
 
 
 def serialize_csv(serializable):
@@ -38,12 +37,8 @@ def benchmark():
     csv_miliseconds = timed(serialize_csv, serializable, number=tries)
     print(f"csv writer: {csv_miliseconds:.3f} ms")
 
-    c_heap_miliseconds = timed(serialize_on_heap, serializable, number=tries)
-    print(f"simplecsv using heap : {c_heap_miliseconds:.3f} ms")
-
-    c_stack_miliseconds = timed(serialize_on_stack, serializable, number=tries)
-    print(f"simplecsv using stack : {c_stack_miliseconds:.3f} ms")
-
+    c_csv_miliseconds = timed(serialize_c, serializable, number=tries)
+    print(f"simplecsv using c module : {c_csv_miliseconds:.3f} ms")
 
 if __name__ == "__main__":
     benchmark()

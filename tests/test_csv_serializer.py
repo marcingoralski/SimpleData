@@ -54,8 +54,5 @@ class TestCSVSerializer(unittest.TestCase):
         self.assertEqual(second_result.last_name, 'Doe')
         self.assertEqual(second_result.age, 25)
 
-    # Additional tests for edge cases and error conditions can be added here
-
-
 if __name__ == '__main__':
     unittest.main()

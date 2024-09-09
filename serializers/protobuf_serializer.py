@@ -1,4 +1,4 @@
-from modules.person_pb2 import Person, People
+from models.person_pb2 import Person, People
 from serializers.base import Serializable, Serializer
 from typing import Iterator, List, Type
 
