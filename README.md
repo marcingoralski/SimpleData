@@ -42,3 +42,17 @@ SimpleData/
 
 ## Run tests
 `python -m unittest discover`
+
+## Run Benchmarks
+`python benchmark.py`
+
+My results:
+```
+Benchmarking...
+Serializable: 100000 elements
+Tries: 20
+
+Py function: 12.259 ms
+csv writer: 18.423 ms
+simplecsv using c module : 3.871 ms
+```
