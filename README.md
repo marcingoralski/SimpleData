@@ -12,7 +12,7 @@ SimpleData/
 │   ├── base.py                     # Serializer ABC
 │   ├── csv_serializer.py           # CSVSerializer class
 │   ├── json_serializer.py          # JSONSerializer class
-│   └── protobuf_serializer.py      # ProtobufSerializer class
+k│   └── protobuf_serializer.py      # ProtobufSerializer class
 │
 ├── models/
 │   ├── person.py                   # Person class
@@ -54,5 +54,5 @@ Tries: 20
 
 Py function: 12.259 ms
 csv writer: 18.423 ms
-simplecsv using c module : 3.871 ms
+simple C module: 3.871 ms
 ```

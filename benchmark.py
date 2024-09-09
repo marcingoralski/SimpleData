@@ -38,7 +38,7 @@ def benchmark():
     print(f"csv writer: {csv_miliseconds:.3f} ms")
 
     c_csv_miliseconds = timed(serialize_c, serializable, number=tries)
-    print(f"simplecsv using c module : {c_csv_miliseconds:.3f} ms")
+    print(f"simple c module: {c_csv_miliseconds:.3f} ms")
 
 if __name__ == "__main__":
     benchmark()
