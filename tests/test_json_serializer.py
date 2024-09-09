@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import mock_open, patch
 from factory.serializer_factory import SimpleDataSerializer
+from factory.format_enum import Format
 from models.person import Person
 
 
@@ -8,7 +9,7 @@ class TestJSONSerializer(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.serializer = SimpleDataSerializer.create_serializer('json')
+        cls.serializer = SimpleDataSerializer.create_serializer(Format.JSON)
         cls.sample_data = [Person(first_name="John", last_name="Doe", age=30),
                            Person(first_name="Jane", last_name="Doe", age=25)]
 

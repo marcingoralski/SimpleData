@@ -1,17 +1,18 @@
 from serializers.csv_serializer import CSVSerializer
 from serializers.json_serializer import JSONSerializer
 from serializers.protobuf_serializer import ProtobufSerializer
+from factory.format_enum import Format
 
 
 class SimpleDataSerializer:
     @staticmethod
-    def create_serializer(format: str):
+    def create_serializer(format: Format):
         match (format):
-            case "csv":
+            case format.CSV:
                 return CSVSerializer()
-            case "json":
+            case format.JSON:
                 return JSONSerializer()
-            case "protobuf":
+            case format.PROTOBUF:
                 return ProtobufSerializer()
             case _:
-                raise ValueError(f"Unknown format {format}")
+                raise ValueError(f"Unknown format: {format}")

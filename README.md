@@ -8,29 +8,28 @@ SimpleData/
 ├── setup.py                        # Setup for simplecsv module
 ├── benchmark.py                    # Benchmark methods
 │
-├── serializers/                    # Directory for serializer classes
-│   ├── base.py                     # Contains the Serializable ABC and other base classes
+├── serializers/
+│   ├── base.py                     # Serializer ABC
 │   ├── csv_serializer.py           # CSVSerializer class
 │   ├── json_serializer.py          # JSONSerializer class
 │   ├── xml_serializer.py           # XMLSerializer class
 │   └── protobuf_serializer.py      # ProtobufSerializer class
 │
-├── models/                         # Directory for data models
-│   └── person.py                   # Person class 
+├── models/
+│   ├── person.py                   # Person class
+│   └── person.proto                # Protobuf Person class 
 │
-├── modules/                        # Directory for data models
-│   ├── simplecsv.c                 # C serializer module
-│   ├── person.proto                # Protobuf Person class
-│   └── person_pb2.py               # Precompiled Protobuf module
+├── modules/
+│   └── simplecsv.c                 # CSV serializer extension
 │
-├── factory/                        # Directory for the serializer factory
+├── factory/
 │   └── serializer_factory.py       # SimpleDataSerializer factory class
 │
-└── tests/                          # Directory for test cases
-    ├── test_csv_serializer.py      # Test cases for CSVSerializer
-    ├── test_json_serializer.py     # Test cases for JSONSerializer
-    ├── test_xml_serializer.py      # Test cases for XMLSerializer
-    └── test_protobuf_serializer.py # Test cases for ProtobufSerializer
+└── tests/
+    ├── test_csv_serializer.py      # CSVSerializer tests
+    ├── test_json_serializer.py     # JSONSerializer tests
+    ├── test_xml_serializer.py      # XMLSerializer tests
+    └── test_protobuf_serializer.py # ProtobufSerializer tests
 ```
 
 ## Install dependencies
@@ -39,9 +38,9 @@ SimpleData/
 ## Setup the CSV module
 `python setup.py install`
 
-## Run tests
-`python -m unittest discover`
-
-## (Optional) Build your own Protobuf module
+## Build Protobuf module
  - Using [Chocolatey](https://chocolatey.org/):
     `choco install protoc && protoc --python_out= . 'models/person.proto'`
+
+## Run tests
+`python -m unittest discover`
