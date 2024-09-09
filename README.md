@@ -33,7 +33,7 @@ k│   └── protobuf_serializer.py      # ProtobufSerializer class
 ## Install dependencies
 `pip install -r requirements.txt`
 
-## Setup the CSV module
+## Setup the C module
 `python setup.py install`
 
 ## Build Protobuf module
@@ -43,10 +43,10 @@ k│   └── protobuf_serializer.py      # ProtobufSerializer class
 ## Run tests
 `python -m unittest discover`
 
-## Run Benchmarks
+## Run benchmarks
 `python benchmark.py`
 
-My results:
+my results:
 ```
 Benchmarking...
 Serializable: 100000 elements
