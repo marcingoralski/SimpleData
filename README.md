@@ -1,6 +1,6 @@
 # SimpleData
 
-Extendable serializer adapter for common formats (csv, json, protobuf), which also shows off how bloated today's environments are.
+Extendable serializer adapter for common formats (csv, json, protobuf), which also benchmarks how bloated today's environments are.
 
 ```
 SimpleData/
