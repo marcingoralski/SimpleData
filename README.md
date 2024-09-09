@@ -12,7 +12,6 @@ SimpleData/
 │   ├── base.py                     # Serializer ABC
 │   ├── csv_serializer.py           # CSVSerializer class
 │   ├── json_serializer.py          # JSONSerializer class
-│   ├── xml_serializer.py           # XMLSerializer class
 │   └── protobuf_serializer.py      # ProtobufSerializer class
 │
 ├── models/
@@ -28,7 +27,6 @@ SimpleData/
 └── tests/
     ├── test_csv_serializer.py      # CSVSerializer tests
     ├── test_json_serializer.py     # JSONSerializer tests
-    ├── test_xml_serializer.py      # XMLSerializer tests
     └── test_protobuf_serializer.py # ProtobufSerializer tests
 ```
 
