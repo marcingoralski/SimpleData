@@ -12,7 +12,7 @@ SimpleData/
 │   ├── base.py                     # Serializer ABC
 │   ├── csv_serializer.py           # CSVSerializer class
 │   ├── json_serializer.py          # JSONSerializer class
-k│   └── protobuf_serializer.py      # ProtobufSerializer class
+│   └── protobuf_serializer.py      # ProtobufSerializer class
 │
 ├── models/
 │   ├── person.py                   # Person class
