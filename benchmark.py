@@ -5,13 +5,13 @@ import io
 
 
 def serialize_py(serializable):
-    return [",".join([str(key), str(value)]) for key, value in serializable.items()]
+    return "\n".join(f"{key},{value}" for key, value in serializable.items())
 
 
 def serialize_csv(serializable):
     output = io.StringIO()
     writer = csv.writer(output)
-    [writer.writerow(row) for row in serializable.items()]
+    writer.writerows(serializable.items())
     return output.getvalue()
 
 
@@ -22,23 +22,29 @@ def timed(func, *args, number=100):
 
  
 def benchmark():
-    size = 100000
+    size_small = 100000
+    size_large = 1000000
     tries = 20
 
-    print("Benchmarking...")
-    print(f"Serializable: {size} elements")
-    print(f"Tries: {tries}\n")
+    print("Benchmarking...\n")
+    
+    print(f"{'Test Case':<20} | {'Size':<10} | {'Tries':<6} | {'Py Time (ms)':<12} | {'CSV Time (ms)':<13} | {'C Time (ms)':<12}")
+    print("-" * 80)
 
-    serializable = {i: i for i in range(size)}
+    serializable_small = {i: i for i in range(size_small)}
+    py_small = timed(serialize_py, serializable_small, number=tries)
+    csv_small = timed(serialize_csv, serializable_small, number=tries)
+    c_csv_small = timed(serialize_c, serializable_small, number=tries)
+    
+    print(f"{'Small Dataset':<20} | {size_small:<10} | {tries:<6} | {py_small:12.3f} | {csv_small:13.3f} | {c_csv_small:12.3f}")
 
-    py_miliseconds = timed(serialize_py, serializable, number=tries)
-    print(f"Py function: {py_miliseconds:.3f} ms")
+    serializable_large = {i: i for i in range(size_large)}
+    py_large = timed(serialize_py, serializable_large, number=tries)
+    csv_large = timed(serialize_csv, serializable_large, number=tries)
+    c_csv_large = timed(serialize_c, serializable_large, number=tries)
 
-    csv_miliseconds = timed(serialize_csv, serializable, number=tries)
-    print(f"csv writer: {csv_miliseconds:.3f} ms")
+    print(f"{'Large Dataset':<20} | {size_large:<10} | {tries:<6} | {py_large:12.3f} | {csv_large:13.3f} | {c_csv_large:12.3f}")
 
-    c_csv_miliseconds = timed(serialize_c, serializable, number=tries)
-    print(f"simple c module: {c_csv_miliseconds:.3f} ms")
 
 if __name__ == "__main__":
     benchmark()
