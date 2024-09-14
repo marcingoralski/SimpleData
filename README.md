@@ -44,15 +44,10 @@ SimpleData/
 `python -m unittest discover`
 
 ## Run benchmarks
-`python benchmark.py`
-
-my results:
+Various approaches on how to serialize CSV can be tested using `python benchmark.py`
 ```
-Benchmarking...
-Serializable: 100000 elements
-Tries: 20
-
-Py function: 12.259 ms
-csv writer: 18.423 ms
-simple C module: 3.871 ms
+Test Case            | Size       | Tries  | Py Time (ms) | CSV Time (ms) | C Time (ms)
+--------------------------------------------------------------------------------
+Small CSV Dataset    | 100000     | 20     |        8.941 |        15.807 |        4.012
+Large CSV Dataset    | 10000000   | 20     |     1051.537 |      1914.048 |      462.117
 ```
